@@ -15,7 +15,7 @@ class DECK:
         self.crit = 1
         self.miss = 1
         self.cardIndx = 0
-        self.cardEndx = 1000000
+        self.cardEndx = 100000
         self.cardTotal = 0
         self.missCount = 0
         self.critCount = 0
@@ -44,9 +44,14 @@ class DECK:
         random.shuffle(self._cards)
 
     def draw(self):
-        indx = self.cardIndx
-        self.cardTotal += self._cards[indx].number
-        self.cardIndx += 1
+        drawCard = True
+        while drawCard:
+            drawCard = False
+            indx = self.cardIndx
+            self.cardTotal += self._cards[indx].number
+            self.cardIndx += 1
+            if self._cards[indx].rolling:
+                drawCard = True
 
         if self._cards[indx].ability == "miss":
             self.missCount += 1
